@@ -94,8 +94,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (max-width:899px),(pointer:coarse){.vinlab__done{right:0}.vinlab__reset{display:none}}
 .crumb{font:600 11.5px/1.5 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .crumb b{color:var(--accent);font-weight:600}
-h1{font:800 clamp(26px,8.2vw,32px)/1.06 var(--head);text-transform:uppercase;letter-spacing:0;overflow-wrap:break-word}
-h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);letter-spacing:0}
+h1{font:800 32px/1.06 var(--head);font-size:min(32px,calc((100vw - 2*var(--gut)) / 11.8));text-transform:uppercase;letter-spacing:0;overflow-wrap:break-word} /* кегль от ширины: строка «Очистим лазером» (11.35 em) должна влезть целиком */
+h1 .d{display:none} /* перенос и тире — только на ПК, где заголовок в пять строк */
+h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);letter-spacing:0;font-size:.8em} /* «без следов и экспертизы» (14.1 em строчными) в одну строку: 11.8/14.1 ≈ .84, с запасом .8 */
 .lead{color:var(--muted);font-size:16px;line-height:1.6;margin-top:14px;max-width:470px}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .facts{list-style:none;margin-top:18px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 22px;padding:16px 14px;text-align:center;border:1px solid var(--l08);border-radius:20px;background:var(--w015)}
@@ -218,6 +219,8 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .vinlab__done{gap:16px}
   .crumb{font-size:12px;margin-bottom:24px}
   h1{font-size:clamp(32px,3.9vw,52px);line-height:1.04}
+  h1 .d{display:inline}
+  h1 em{font-size:1em}
   .lead{font-size:18px;margin-top:22px}
   .cta{margin-top:32px;gap:14px}
   .btn{height:50px;padding:0 28px;font-size:13.5px;letter-spacing:.15em}
