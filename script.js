@@ -29,7 +29,9 @@
         var done = root.querySelector('.vinlab__done');
         var resetBtn = root.querySelector('.vinlab__reset');
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var coarse = window.matchMedia('(pointer: coarse)').matches;
+        // «Телефон» — узкий экран ИЛИ палец вместо мыши: там интерактива нет, луч идёт сам.
+        // Считаем каждый раз заново, а не один раз при загрузке: окно могут сузить или повернуть.
+        function mobile() { return window.matchMedia('(max-width: 899px)').matches || window.matchMedia('(pointer: coarse)').matches; }
 
         // Полоса, в которой выбит номер: по ней считаем процент очистки
         var BAND = { x0: 0.04, x1: 0.96, y0: 0.36, y1: 0.64 };
@@ -202,7 +204,7 @@
             pointer = null; last = null;
             if (hint) hint.classList.add('vinlab__hint--hidden');
             if (done) done.classList.add('vinlab__done--show');
-            if (resetBtn && !coarse) { resetBtn.hidden = false; resetBtn.classList.add('vinlab__reset--show'); }
+            if (resetBtn && !mobile()) { resetBtn.hidden = false; resetBtn.classList.add('vinlab__reset--show'); }
             if (meter) meter.textContent = '100%';
             track('vin_cleaned');
             var t0 = performance.now();
@@ -266,12 +268,12 @@
         }
 
         canvas.addEventListener('pointerdown', function (e) {
-            if (finished || coarse) return;
+            if (finished || mobile()) return;
             userStart();
             pointer = pos(e); last = null; strokeTo(pointer.x, pointer.y); render();
         });
         canvas.addEventListener('pointermove', function (e) {
-            if (finished || coarse) return;
+            if (finished || mobile()) return;
             if (e.pointerType !== 'mouse' && !e.buttons) return; // палец: только при касании
             userStart();
             pointer = pos(e); strokeTo(pointer.x, pointer.y); render();
@@ -304,7 +306,7 @@
         loadPhotos(function () {
             setup();
             root.classList.add('vinlab--ready');
-            if (coarse && 'IntersectionObserver' in window) {
+            if (mobile() && 'IntersectionObserver' in window) {
                 var seen = false;
                 new IntersectionObserver(function (entries) {
                     if (entries[0].isIntersecting && !seen) { seen = true; setTimeout(autoDemo, 900); }
@@ -315,7 +317,7 @@
         window.addEventListener('resize', function () {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function () {
-                if (Math.round(root.getBoundingClientRect().width) !== W) { interacted = false; setup(); if (coarse) setTimeout(autoDemo, 400); }
+                if (Math.round(root.getBoundingClientRect().width) !== W) { interacted = false; setup(); if (mobile()) setTimeout(autoDemo, 400); }
             }, 200);
         });
     }
