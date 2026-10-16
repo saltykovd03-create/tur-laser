@@ -17,7 +17,7 @@
     if (year) year.textContent = String(new Date().getFullYear());
 
     /* ---------- Интерактив: стираем ржавчину — проявляется VIN ---------- */
-    var MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, monospace';
+    var MONO = '"Orbitron", "Tektur", sans-serif'; // только для запасной таблички, если фото не загрузились
     var VIN = 'XW8 TURLASER 260001'; // показательный номер, не настоящий
 
     function initVinLab(root) {
@@ -37,6 +37,36 @@
 
         var W = 0, H = 0, dpr = 1, base, rust, rctx, grid, cleaned = 0;
         var finished = false, interacted = false, pointer = null, last = null, sparks = [], raf = 0, fade = 1, autoRaf = 0;
+        var photoBase = null, photoRust = null; // фото-слои: табличка и ржавчина (data-base / data-rust у #vinlab)
+
+        // Картинка «по cover»: заполняет w×h целиком, лишнее по краям обрезается
+        function cover(g, img, w, h) {
+            var s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+            var dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+            g.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+        }
+
+        // Грузим оба фото; cb() — когда оба пришли или ушли в ошибку, но не позже чем через 4 с.
+        // Не успели к 4 с — рисуем запасную табличку, а пришедшие позже фото подставляем, пока человек не начал тереть.
+        function loadPhotos(cb) {
+            var list = [['data-base', function (im) { photoBase = im; }], ['data-rust', function (im) { photoRust = im; }]];
+            var left = list.length, called = false;
+            var timer = setTimeout(go, 4000);
+            function go() { if (called) return; called = true; clearTimeout(timer); cb(); }
+            function settle() {
+                if (--left > 0) return;
+                if (!called) go();
+                else if (!interacted && !finished && !autoRaf) setup();
+            }
+            list.forEach(function (it) {
+                var src = root.getAttribute(it[0]);
+                if (!src) { settle(); return; }
+                var im = new Image();
+                im.onload = function () { it[1](im); settle(); };
+                im.onerror = settle;
+                im.src = src;
+            });
+        }
 
         function valueNoise(w, h, cells) {
             var gw = cells + 1, gv = new Float32Array(gw * gw), i;
@@ -60,6 +90,7 @@
             c.width = W * dpr; c.height = H * dpr;
             var g = c.getContext('2d');
             g.scale(dpr, dpr);
+            if (photoBase) { cover(g, photoBase, W, H); return c; }
             var grad = g.createLinearGradient(0, 0, W, H);
             grad.addColorStop(0, '#99A3AE'); grad.addColorStop(0.5, '#C9D0D8'); grad.addColorStop(1, '#8E98A4');
             g.fillStyle = grad; g.fillRect(0, 0, W, H);
@@ -86,6 +117,12 @@
             var c = document.createElement('canvas');
             c.width = W * dpr; c.height = H * dpr;
             var g = c.getContext('2d');
+            if (photoRust) {
+                cover(g, photoRust, c.width, c.height);          // в пикселях устройства
+                g.fillStyle = 'rgba(30,22,16,.25)'; g.fillRect(0, 0, c.width, c.height);
+                g.setTransform(dpr, 0, 0, dpr, 0, 0);           // erase() рисует в CSS px
+                return c;
+            }
             var sw = 72, sh = Math.max(8, Math.round(72 * H / W));
             var small = document.createElement('canvas'); small.width = sw; small.height = sh;
             var sg = small.getContext('2d');
@@ -184,15 +221,15 @@
                 var p = sparks[i];
                 p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life -= 0.04;
                 if (p.life <= 0) { sparks.splice(i, 1); continue; }
-                ctx.globalAlpha = p.life; ctx.strokeStyle = '#7AEBFF'; ctx.lineWidth = 1.5;
+                ctx.globalAlpha = p.life; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 1.5;
                 ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 2, p.y - p.vy * 2); ctx.stroke();
             }
             ctx.globalAlpha = 1;
             if (pointer && !finished) {
                 var g = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 44);
-                g.addColorStop(0, 'rgba(122,235,255,0.6)'); g.addColorStop(0.4, 'rgba(122,235,255,0.18)'); g.addColorStop(1, 'rgba(122,235,255,0)');
+                g.addColorStop(0, 'rgba(119,207,248,0.6)'); g.addColorStop(0.4, 'rgba(119,207,248,0.18)'); g.addColorStop(1, 'rgba(119,207,248,0)');
                 ctx.fillStyle = g; ctx.beginPath(); ctx.arc(pointer.x, pointer.y, 44, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = 'rgba(122,235,255,0.35)'; ctx.lineWidth = 1.5;
+                ctx.strokeStyle = 'rgba(119,207,248,0.35)'; ctx.lineWidth = 1.5;
                 ctx.beginPath(); ctx.moveTo(W * 0.92, -10); ctx.lineTo(pointer.x, pointer.y); ctx.stroke();
                 ctx.fillStyle = '#FFFFFF'; ctx.beginPath(); ctx.arc(pointer.x, pointer.y, 3, 0, Math.PI * 2); ctx.fill();
             }
@@ -260,13 +297,16 @@
             })(t0);
         }
 
-        setup();
-        if (coarse && 'IntersectionObserver' in window) {
-            var seen = false;
-            new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting && !seen) { seen = true; setTimeout(autoDemo, 900); }
-            }, { threshold: 0.6 }).observe(root);
-        }
+        loadPhotos(function () {
+            setup();
+            root.classList.add('vinlab--ready');
+            if (coarse && 'IntersectionObserver' in window) {
+                var seen = false;
+                new IntersectionObserver(function (entries) {
+                    if (entries[0].isIntersecting && !seen) { seen = true; setTimeout(autoDemo, 900); }
+                }, { threshold: 0.6 }).observe(root);
+            }
+        });
         var resizeTimer = 0;
         window.addEventListener('resize', function () {
             clearTimeout(resizeTimer);
@@ -278,20 +318,20 @@
     var lab = document.getElementById('vinlab');
     if (lab) initVinLab(lab);
 
-    /* ---------- Слайдер «до / после» ---------- */
-    Array.prototype.forEach.call(document.querySelectorAll('.ba'), function (ba) {
-        var range = ba.querySelector('input[type=range]');
-        if (!range) return;
-        var set = function () { ba.style.setProperty('--pos', range.value + '%'); };
-        range.addEventListener('input', set);
-        set();
-    });
-
     /* ---------- Видео: играет только на экране, без звука ---------- */
     var vid = document.querySelector('.showreel__video');
     if (vid && 'IntersectionObserver' in window) {
+        // Автозапуск запрещён (энергосбережение на iPhone, экономия трафика на Android) — показываем кнопки плеера,
+        // иначе ролик навсегда остаётся картинкой. AbortError — это pause() во время запуска, не запрет.
+        var manualPlay = function () {
+            vid.controls = true;
+            if (vid.parentNode && vid.parentNode.classList) vid.parentNode.classList.add('proc__video--manual');
+        };
         new IntersectionObserver(function (entries) {
-            if (entries[0].isIntersecting) { var p = vid.play(); if (p && p.catch) p.catch(function () {}); }
+            if (entries[0].isIntersecting) {
+                var p = vid.play();
+                if (p && p.catch) p.catch(function (err) { if (!err || err.name !== 'AbortError') manualPlay(); });
+            }
             else vid.pause();
         }, { threshold: 0.2 }).observe(vid);
     }
@@ -308,9 +348,9 @@
             d = d.slice(0, 11);
             var out = '+7';
             if (d.length > 1) out += ' (' + d.slice(1, 4);
-            if (d.length >= 4) out += ') ' + d.slice(4, 7);
-            if (d.length >= 7) out += '-' + d.slice(7, 9);
-            if (d.length >= 9) out += '-' + d.slice(9, 11);
+            if (d.length > 4) out += ') ' + d.slice(4, 7);   // разделитель — только когда за ним уже есть цифра,
+            if (d.length > 7) out += '-' + d.slice(7, 9);     // иначе Backspace упирается в «) » и «-»
+            if (d.length > 9) out += '-' + d.slice(9, 11);
             phone.value = out;
         });
         form.addEventListener('submit', function (e) {
@@ -333,5 +373,92 @@
         new IntersectionObserver(function (entries) {
             mbar.classList.toggle('mbar--hidden', entries[0].isIntersecting);
         }, { threshold: 0.2 }).observe(zay);
+    }
+
+    /* ---------- Нижняя панель не появляется, пока кнопки первого экрана видны или ещё ниже края экрана ---------- */
+    // На низких экранах (iPhone SE в Safari) кнопки стоят ниже края — панель закрыла бы заголовок.
+    // Нижняя граница «экрана» продлена: кнопки ниже края считаются видимыми, и прыжок по якорю это не ломает.
+    var heroCta = document.querySelector('#hero .cta');
+    if (mbar && heroCta) {
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                var e = entries[0];
+                mbar.classList.toggle('mbar--early', e.isIntersecting || e.boundingClientRect.top > 0);
+            }, { rootMargin: '0px 0px 10000px 0px' }).observe(heroCta);
+        } else mbar.classList.remove('mbar--early');
+    }
+
+    /* ---------- Нижняя панель уходит, только пока подписи или точки ленты «до / после» в нижних 90px экрана ---------- */
+    // Панель занимает 68px снизу: фото ленты она перекрывает, как любую картинку, а подписи и точки не прячет.
+    // Корень наблюдателя — полоса 90px у нижнего края; высота окна меняется (строка адреса в Safari) — полоса пересчитывается.
+    var baUnder = document.querySelectorAll('.ba figcaption, .ba .dots');
+    if (mbar && baUnder.length && 'IntersectionObserver' in window) {
+        var underIO = null, underOn = [], underTimer = 0;
+        var watchUnder = function () {
+            if (underIO) underIO.disconnect();
+            underOn = []; // первый вызов нового наблюдателя приходит по всем целям сразу
+            underIO = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    var k = underOn.indexOf(e.target);
+                    if (e.isIntersecting && k < 0) underOn.push(e.target);
+                    else if (!e.isIntersecting && k >= 0) underOn.splice(k, 1);
+                });
+                mbar.classList.toggle('mbar--lane', underOn.length > 0);
+            }, { rootMargin: -Math.max(0, window.innerHeight - 90) + 'px 0px 0px 0px' });
+            Array.prototype.forEach.call(baUnder, function (el) { underIO.observe(el); });
+        };
+        watchUnder();
+        window.addEventListener('resize', function () {
+            clearTimeout(underTimer);
+            underTimer = setTimeout(watchUnder, 200);
+        });
+    }
+
+    /* ---------- Лента «до / после»: счётчик, точки, стрелки ---------- */
+    var lane = document.querySelector('.ba .track');
+    if (lane) {
+        var slides = lane.querySelectorAll('.pair');
+        var count = document.querySelector('.ba__count b');
+        var dots = document.querySelectorAll('.ba .dots i');
+        var prev = document.querySelector('.ba__nav [data-dir="-1"]'), next = document.querySelector('.ba__nav [data-dir="1"]');
+        var laneBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        var nearest = function () {
+            var x = lane.scrollLeft, best = 0;
+            for (var i = 1; i < slides.length; i++) {
+                if (Math.abs(slides[i].offsetLeft - x) < Math.abs(slides[best].offsetLeft - x)) best = i;
+            }
+            return best;
+        };
+        var paint = function () {
+            var end = lane.scrollLeft + lane.clientWidth >= lane.scrollWidth - 4;
+            var i = end ? slides.length - 1 : nearest();
+            if (count) count.textContent = (i < 9 ? '0' : '') + (i + 1);
+            Array.prototype.forEach.call(dots, function (d, k) { d.classList.toggle('on', k === i); });
+            if (prev) prev.disabled = lane.scrollLeft < 4;
+            if (next) next.disabled = end;
+        };
+        var go = function (d) {
+            var i = Math.max(0, Math.min(slides.length - 1, nearest() + d));
+            lane.scrollTo({ left: slides[i].offsetLeft, behavior: laneBehavior });
+        };
+        if (prev) prev.addEventListener('click', function () { go(-1); });
+        if (next) next.addEventListener('click', function () { go(1); });
+        var laneRaf = 0;
+        lane.addEventListener('scroll', function () {
+            cancelAnimationFrame(laneRaf); laneRaf = requestAnimationFrame(paint);
+        }, { passive: true });
+        paint();
+    }
+
+    /* ---------- Появление при прокрутке: только H2, видео и лента ---------- */
+    var rv = document.querySelectorAll('.rv');
+    if (rv.length && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js-rv');
+        var rvIo = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('rv--in'); rvIo.unobserve(e.target); }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        Array.prototype.forEach.call(rv, function (el) { rvIo.observe(el); });
     }
 })();
