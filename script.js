@@ -17,7 +17,7 @@
     if (year) year.textContent = String(new Date().getFullYear());
 
     /* ---------- Интерактив: стираем ржавчину — проявляется VIN ---------- */
-    var MONO = '"Orbitron", "Tektur", sans-serif'; // только для запасной таблички, если фото не загрузились
+    var MONO = '"Montserrat", Arial, sans-serif'; // только для запасной таблички, если фото не загрузились
     var VIN = 'XW8 TURLASER 260001'; // показательный номер, не настоящий
 
     function initVinLab(root) {
@@ -202,7 +202,7 @@
             pointer = null; last = null;
             if (hint) hint.classList.add('vinlab__hint--hidden');
             if (done) done.classList.add('vinlab__done--show');
-            if (resetBtn) { resetBtn.hidden = false; resetBtn.classList.add('vinlab__reset--show'); }
+            if (resetBtn && !coarse) { resetBtn.hidden = false; resetBtn.classList.add('vinlab__reset--show'); }
             if (meter) meter.textContent = '100%';
             track('vin_cleaned');
             var t0 = performance.now();
@@ -266,12 +266,12 @@
         }
 
         canvas.addEventListener('pointerdown', function (e) {
-            if (finished) return;
+            if (finished || coarse) return;
             userStart();
             pointer = pos(e); last = null; strokeTo(pointer.x, pointer.y); render();
         });
         canvas.addEventListener('pointermove', function (e) {
-            if (finished) return;
+            if (finished || coarse) return;
             if (e.pointerType !== 'mouse' && !e.buttons) return; // палец: только при касании
             userStart();
             pointer = pos(e); strokeTo(pointer.x, pointer.y); render();
@@ -282,18 +282,22 @@
 
         if (resetBtn) resetBtn.addEventListener('click', function () { interacted = false; setup(); track('vin_reset'); });
 
-        // На телефоне показываем сами: луч проходит по номеру, пока человек не вмешался
+        // На телефоне интерактива нет: луч сам проходит змейкой по полосе номера и дочищает до конца
         function autoDemo() {
-            if (interacted || finished || reduced || autoRaf) return;
-            var t0 = performance.now(), dur = 5200;
+            if (finished || autoRaf) return;
+            if (reduced) { finish(); return; }
+            var t0 = performance.now(), dur = 6500, rows = 3, bandH = (BAND.y1 - BAND.y0) * H;
             (function frame(now) {
-                if (interacted || finished) { autoRaf = 0; pointer = null; render(); return; }
+                if (finished) { autoRaf = 0; return; }
                 var t = Math.min(1, (now - t0) / dur);
-                var e = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-                var x = W * (0.05 + 0.9 * e), y = H / 2 + Math.sin(t * Math.PI * 7) * H * 0.11;
+                var p = t * rows, row = Math.min(rows - 1, Math.floor(p)), f = p - row;
+                var along = row % 2 ? 1 - f : f; // туда — обратно — туда
+                var x = W * (0.04 + 0.92 * along);
+                var y = BAND.y0 * H + bandH * (row + 0.5) / rows + Math.sin(t * Math.PI * 11) * bandH * 0.12;
                 pointer = { x: x, y: y }; strokeTo(x, y); render();
-                autoRaf = t < 1 ? requestAnimationFrame(frame) : 0;
-                if (t >= 1 && !finished) { pointer = null; render(); }
+                if (t < 1) { autoRaf = requestAnimationFrame(frame); return; }
+                autoRaf = 0; pointer = null;
+                if (!finished) finish(); else render();
             })(t0);
         }
 
@@ -311,7 +315,7 @@
         window.addEventListener('resize', function () {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function () {
-                if (Math.round(root.getBoundingClientRect().width) !== W) { interacted = false; setup(); }
+                if (Math.round(root.getBoundingClientRect().width) !== W) { interacted = false; setup(); if (coarse) setTimeout(autoDemo, 400); }
             }, 200);
         });
     }
@@ -336,39 +340,8 @@
         }, { threshold: 0.2 }).observe(vid);
     }
 
-    /* ---------- Форма заявки ---------- */
-    var form = document.getElementById('lead-form');
-    if (form) {
-        var phone = form.querySelector('[name=phone]');
-        if (phone) phone.addEventListener('input', function () {
-            var d = phone.value.replace(/\D/g, '');
-            if (!d) { phone.value = ''; return; }
-            if (d.charAt(0) === '8') d = '7' + d.slice(1);
-            if (d.charAt(0) !== '7') d = '7' + d;
-            d = d.slice(0, 11);
-            var out = '+7';
-            if (d.length > 1) out += ' (' + d.slice(1, 4);
-            if (d.length > 4) out += ') ' + d.slice(4, 7);   // разделитель — только когда за ним уже есть цифра,
-            if (d.length > 7) out += '-' + d.slice(7, 9);     // иначе Backspace упирается в «) » и «-»
-            if (d.length > 9) out += '-' + d.slice(9, 11);
-            phone.value = out;
-        });
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-            var get = function (n) { var el = form.querySelector('[name=' + n + ']'); return el ? el.value.trim() : ''; };
-            var lines = ['Здравствуйте! Заявка с сайта TUR-LASER.', 'Имя: ' + get('name'), 'Телефон: ' + get('phone'), 'Что чистим: ' + get('what')];
-            if (get('comment')) lines.push('Комментарий: ' + get('comment'));
-            var wa = form.querySelector('[data-wa]');
-            if (wa) wa.href = form.getAttribute('data-wa-base') + '?text=' + encodeURIComponent(lines.join('\n'));
-            form.classList.add('form--sent');
-            track('form_sent');
-            // Отправка заявки на сервер подключается отдельно — см. README, раздел «Куда уходят заявки».
-        });
-    }
-
-    /* ---------- Нижняя панель прячется, когда видна форма ---------- */
-    var mbar = document.getElementById('mbar'), zay = document.getElementById('zayavka');
+    /* ---------- Нижняя панель прячется, когда видны контакты ---------- */
+    var mbar = document.getElementById('mbar'), zay = document.getElementById('kontakty');
     if (mbar && zay && 'IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {
             mbar.classList.toggle('mbar--hidden', entries[0].isIntersecting);
