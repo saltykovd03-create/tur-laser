@@ -11,7 +11,7 @@ index.html          главная: шапка, первый экран, про�
 style.css           цвета, шрифты и отступы заданы переменными в :root; телефон первичен, ПК с 900px
 script.js           интерактив с лазером, лента «до/после», появление при прокрутке, нижняя панель
 video/              process.mp4 (18 с, без звука) + process-poster.jpg — блок «Процесс»
-img/                logo.png — логотип шапки (tools/logo_shapka.py); vinlab-base.jpg и vinlab-rust.jpg — слои интерактива; ba/ba-N-before|after.jpg — лента
+img/                logo.png — логотип шапки (tools/logo_shapka.py); vinlab-base.jpg и vinlab-rust.jpg — слои интерактива; ba/ba-N-before|after.jpg — лента; more/lestnica-do|posle.jpg — кейс «лестница» в блоке «Не только VIN» (720×960, 3:4)
 img/tg/             исходные фото с выездов (из них нарезаны ba/ и Авито)
 fonts/              Montserrat и Sofia Sans Semi Condensed — OFL, лежат локально
 policy/             политика конфиденциальности
