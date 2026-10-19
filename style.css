@@ -124,7 +124,7 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
 .pair{flex:0 0 min(300px,82vw);scroll-snap-align:start}
 .pair__shots{display:flex;flex-direction:column;gap:12px;position:relative}
 .ph{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--bg-2);box-shadow:0 0 0 1px var(--l08)}
-.ph img{width:100%;height:100%;object-fit:cover}
+.ph img,.ph video{width:100%;height:100%;object-fit:cover;display:block}
 .ph::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(6,18,38,.62),transparent 38%);z-index:1;pointer-events:none}
 .ph span{position:absolute;left:12px;top:11px;z-index:2;font:700 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase}
 .ph--after span{color:var(--accent)}
@@ -164,6 +164,7 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
 .case{margin-top:26px}
 .case__shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .case .ph{aspect-ratio:3/4}
+.case .case__video{grid-column:1/-1;aspect-ratio:16/9;order:3} /* на телефоне видео широкой плашкой под парой фото */
 .case figcaption{margin-top:12px;display:grid;gap:6px}
 .case figcaption .note{color:var(--muted);font-size:15px;line-height:1.45}
 
@@ -263,13 +264,14 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .contact__btns .btn{flex:0 0 auto}
   .final .h2 span{display:inline}
   .final .lead{max-width:640px}
-  .more .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,500px);column-gap:64px;align-items:start}
+  .more .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,640px);column-gap:64px;align-items:start}
   .more .kicker{grid-column:1;grid-row:1;justify-self:start}
   .more .h2{grid-column:1;grid-row:2;font-size:clamp(26px,2.6vw,34px)}
   .more .tag{grid-column:1;grid-row:3}
   .more__list{grid-column:1;grid-row:4;grid-template-columns:1fr 1fr;gap:20px 28px;margin-top:28px}
   .case{grid-column:2;grid-row:1/5;align-self:center;margin-top:0}
-  .case__shots{gap:16px}
+  .case__shots{grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .case .case__video{grid-column:auto;aspect-ratio:3/4;order:0} /* на ПК три одинаковые плитки: до — чистка — после */
   .more__list li{font-size:15px}
   .more__list b{font-size:15px}
   .mbar{display:none}

@@ -325,8 +325,8 @@
     if (lab) initVinLab(lab);
 
     /* ---------- Видео: играет только на экране, без звука ---------- */
-    var vid = document.querySelector('.showreel__video');
-    if (vid && 'IntersectionObserver' in window) {
+    Array.prototype.forEach.call(document.querySelectorAll('.showreel__video'), function (vid) {
+        if (!('IntersectionObserver' in window)) return;
         // Автозапуск запрещён (энергосбережение на iPhone, экономия трафика на Android) — показываем кнопки плеера,
         // иначе ролик навсегда остаётся картинкой. AbortError — это pause() во время запуска, не запрет.
         var manualPlay = function () {
@@ -340,7 +340,7 @@
             }
             else vid.pause();
         }, { threshold: 0.2 }).observe(vid);
-    }
+    });
 
     /* ---------- Нижняя панель прячется, когда видны контакты ---------- */
     var mbar = document.getElementById('mbar'), zay = document.getElementById('kontakty');
