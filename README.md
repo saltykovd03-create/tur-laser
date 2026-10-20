@@ -104,6 +104,30 @@ gh api -X POST repos/<аккаунт>/tur-laser/pages -f build_type=legacy -f 's
 После правок CSS/JS поднимать версию `?v=` в `index.html` и `policy/`,
 иначе браузеры покажут старые стили.
 
+## Свой домен tur-laser.ru
+
+Домен куплен 20.10.2026 на Timeweb (hosting.timeweb.ru, оплачен до 20.10.2027),
+DNS ведёт Timeweb. Сайт по-прежнему отдаёт GitHub Pages, бесплатно.
+
+Что настроено:
+
+- в корне репозитория файл `CNAME` с одной строкой `tur-laser.ru` — без него Pages
+  домен забывает при следующем деплое;
+- в Timeweb → Домены → tur-laser.ru → Редактор DNS: четыре записи `A` на
+  `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (хост пустой)
+  и `CNAME www → saltykovd03-create.github.io`. Запись `AAAA`, которую Timeweb создаёт
+  по умолчанию на свой сервер, удалена: иначе клиенты с IPv6 попадали бы на Timeweb,
+  а GitHub не выпускал бы сертификат;
+- в настройках Pages: `gh api -X PUT repos/saltykovd03-create/tur-laser/pages -f cname=tur-laser.ru`,
+  после выпуска сертификата — `-F https_enforced=true`;
+- канонические адреса в `index.html` и `policy/` указывают на `https://tur-laser.ru/`,
+  старый адрес `saltykovd03-create.github.io/tur-laser/` теперь перенаправляет на домен.
+
+Проверка: `dig +short tur-laser.ru A` должен вернуть четыре адреса GitHub,
+`gh api repos/saltykovd03-create/tur-laser/pages` — `https_enforced: true`.
+Личные данные администратора домена у регистратора .ru надо подтвердить
+(в whois статус `UNVERIFIED`), иначе через месяц делегирование могут снять.
+
 ## Перед запуском
 
 - [ ] Настоящие фото «до/после» и видео на месте
