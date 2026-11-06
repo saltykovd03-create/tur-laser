@@ -101,7 +101,9 @@ h1 .d{display:none} /* перенос и тире — только на ПК, г
 h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);letter-spacing:0;font-size:.8em} /* «без следов и экспертизы» (14.1 em строчными) в одну строку: 11.8/14.1 ≈ .84, с запасом .8 */
 .lead{color:var(--muted);font-size:16px;line-height:1.6;margin-top:14px;max-width:470px}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.cta--goroda .btn--tel{flex:1 1 calc(50% - 5px);display:inline-flex;flex-direction:column;gap:4px;height:auto;padding:12px 10px}
+.cta--goroda .btn--tel{flex:1 1 calc(50% - 5px);display:inline-flex;flex-direction:column;gap:4px;height:auto;padding:12px 10px;background:var(--w03);border:1px solid var(--l15);color:#fff}
+.cta--goroda .btn--tel small{color:var(--accent);opacity:1}
+.cta--goroda .btn--tel:hover{border-color:var(--accent);background:var(--a05)}
 .btn--tel small{font:600 10px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.7}
 .cta__soc{display:flex;gap:10px;flex:1 1 100%;justify-content:center}
 .facts{list-style:none;margin-top:18px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 22px;padding:16px 14px;text-align:center;border:1px solid var(--l08);border-radius:20px;background:var(--w015)}
