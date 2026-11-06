@@ -292,7 +292,7 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .ibtn{flex:0 0 auto;width:50px;height:50px}
   .contact__btns .btn{flex:0 0 auto}
   .final .h2 span{display:inline}
-  .final .lead{max-width:640px}
+  .final .lead{max-width:760px}
   .more .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,640px);column-gap:64px;align-items:start}
   .more .kicker{grid-column:1;grid-row:1;justify-self:start}
   .more .h2{grid-column:1;grid-row:2;font-size:clamp(26px,2.6vw,34px)}
@@ -347,7 +347,7 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
 .doc p+p,.doc ol+p,.doc p+ol{margin-top:10px}
 
 /* --- заявка с сайта (решение владельца 06.11.2026: телефон, машина, адрес → CRM) --- */
-.zayavka{position:relative;margin:28px auto 0;max-width:560px;text-align:left;background:var(--w02);border:1px solid var(--l08);border-radius:20px;padding:24px 22px;display:grid;gap:18px}
+.zayavka{position:relative;margin:0;max-width:none;text-align:left;background:var(--w02);border:1px solid var(--l08);border-radius:20px;padding:24px 22px;display:grid;gap:18px}
 .zayavka__h{font:800 20px/1.2 var(--head);text-transform:uppercase}
 .zayavka__p{color:var(--muted);font-size:15px;line-height:1.5;margin-top:6px}
 .zayavka__fields{display:grid;gap:12px}
@@ -373,3 +373,24 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
 .zayavka__ok p{margin-top:6px;color:var(--muted);font-size:15px;line-height:1.5}
 .zayavka--sent .zayavka__fields{display:none}
 @media (min-width:900px){.zayavka{padding:32px 34px}}
+
+/* --- 05 Контакты: заявка слева, номера справа --- */
+.kont{border-top:1px solid var(--l05)}
+.kont__grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:24px;text-align:left}
+.kont__info{display:grid;gap:22px;align-content:start;padding:8px 2px}
+.kont__info .logo img{height:40px}
+.kont__p{color:var(--muted);font-size:15px;line-height:1.55;max-width:420px}
+.kont__city{display:grid;gap:8px;padding-top:18px;border-top:1px solid var(--l06)}
+.kont__name{font:700 13px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#fff}
+.kont__name small{font:500 13px/1.4 var(--body);letter-spacing:0;text-transform:none;color:var(--muted)}
+.kont__tel{font:800 26px/1.1 var(--num);letter-spacing:-.01em;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kont__btns{display:flex;gap:8px;align-items:center}
+.kont__btns .btn{height:44px;padding:0 20px;font-size:12px}
+.ftr{text-align:center}
+.ftr__bot{margin-top:0;padding-top:0;border-top:0}
+@media (min-width:900px){
+  .kont__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:32px;align-items:start}
+  .kont__info{padding:12px 0 0 12px}
+  .kont__tel{font-size:30px}
+  .ftr{padding:24px 0 32px}
+}
