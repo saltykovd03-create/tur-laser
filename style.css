@@ -237,8 +237,9 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .hdr__tel{font-size:15px}
   .hdr .hdr__msg{display:inline-flex;height:40px;padding:0 18px;font-size:12px} /* .hdr — чтобы не перебивал .btn ниже */
   .hero{padding:calc(var(--hdr) + 36px) 0 44px}
-  .hero__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:56px;align-items:center}
-  .hero__art{order:0;margin-bottom:40px}
+  .hero__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-rows:auto 1fr;gap:0 56px;align-items:start}
+  .hero__text{grid-column:1;grid-row:1/3}
+  .hero__art{order:0;grid-column:2;grid-row:1;margin-bottom:0;max-width:none}
   .vinlab{aspect-ratio:4/3}
   .vinlab__done{gap:16px}
   .crumb{font-size:12px;margin-bottom:24px}
@@ -248,9 +249,9 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .lead{font-size:18px;margin-top:22px}
   .cta{margin-top:32px;gap:14px}
   .btn{height:50px;padding:0 28px;font-size:13.5px;letter-spacing:.15em}
-  .facts{flex-wrap:nowrap;align-items:baseline;gap:0;width:max-content;max-width:100%;margin:36px auto 0;padding:20px 30px;border-radius:100px}
+  .facts{grid-column:2;grid-row:2;flex-wrap:nowrap;align-items:baseline;justify-content:space-between;gap:0;width:100%;margin:18px 0 0;padding:16px 24px;border-radius:100px}
   .facts li{gap:8px}
-  .facts li+li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--a25);margin:0 clamp(16px,2vw,26px);align-self:center}
+  .facts li+li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--a25);margin:0 clamp(10px,1.2vw,18px);align-self:center}
   .h2{font-size:clamp(28px,3.4vw,46px);line-height:1.1}
   .tag{font-size:19px;margin-top:14px}
   .kicker{font-size:12.5px;letter-spacing:.26em;padding:11px 20px;margin-bottom:18px}
