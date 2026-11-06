@@ -437,3 +437,57 @@
         Array.prototype.forEach.call(rv, function (el) { rvIo.observe(el); });
     }
 })();
+
+/* ---------- Заявка с сайта → CRM (zayavka.tur-laser.ru). Телефон, машина, адрес; без зависимостей ---------- */
+(function () {
+    'use strict';
+    var form = document.getElementById('zayavka');
+    if (!form || !window.fetch) return;
+    var phone = form.querySelector('[name=phone]'), err = form.querySelector('.zayavka__err'),
+        btn = form.querySelector('.zayavka__btn'), ok = form.querySelector('.zayavka__ok'),
+        opened = Date.now(); // сервер отбрасывает заявки, «заполненные» быстрее 3 секунд
+
+    // Маска +7 (___) ___-__-__: ввод с 8 или 7 в начале тоже понимаем
+    function mask(v) {
+        var d = v.replace(/\D/g, '');
+        if (d.charAt(0) === '7' || d.charAt(0) === '8') d = d.slice(1);
+        d = d.slice(0, 10);
+        if (!d) return '';
+        var s = '+7 (' + d.slice(0, 3);
+        if (d.length >= 3) s += ') ' + d.slice(3, 6);
+        if (d.length >= 6) s += '-' + d.slice(6, 8);
+        if (d.length >= 8) s += '-' + d.slice(8, 10);
+        return s;
+    }
+    phone.addEventListener('input', function () { phone.value = mask(phone.value); });
+    phone.addEventListener('focus', function () { if (!phone.value) phone.value = '+7 ('; });
+    phone.addEventListener('blur', function () { if (phone.value === '+7 (') phone.value = ''; });
+
+    function fail(msg, field) {
+        err.textContent = msg; err.hidden = false;
+        if (field) { field.setAttribute('aria-invalid', 'true'); field.focus(); }
+    }
+    form.addEventListener('input', function (e) { if (e.target.removeAttribute) e.target.removeAttribute('aria-invalid'); });
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.hidden = true;
+        var car = form.querySelector('[name=car]'), addr = form.querySelector('[name=address]');
+        var cityEl = form.querySelector('[name=city]:checked');
+        if (phone.value.replace(/\D/g, '').length !== 11) return fail('Введите номер целиком: 10 цифр после +7', phone);
+        if (car.value.trim().length < 2) return fail('Напишите марку и модель машины', car);
+        if (addr.value.trim().length < 3) return fail('Напишите адрес или ориентир, куда приехать', addr);
+        btn.disabled = true;
+        var body = { phone: phone.value, car: car.value.trim(), address: addr.value.trim(), city: cityEl ? cityEl.value : 'spb',
+            site: form.querySelector('[name=site]').value, t: opened };
+        fetch(form.getAttribute('data-url'), { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+            .then(function (r) { return r.json(); })
+            .then(function (j) {
+                if (j && j.ok) {
+                    form.classList.add('zayavka--sent'); ok.hidden = false;
+                    try { if (typeof window.ym === 'function' && window.YM_ID) window.ym(window.YM_ID, 'reachGoal', 'form_sent'); } catch (x) { /* нет счётчика */ }
+                } else { fail((j && j.err) || 'Не получилось отправить. Позвоните или напишите в мессенджер.'); btn.disabled = false; }
+            })
+            .catch(function () { fail('Нет связи с сервером. Позвоните или напишите в мессенджер.'); btn.disabled = false; });
+    });
+})();

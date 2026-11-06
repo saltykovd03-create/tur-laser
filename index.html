@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TUR-LASER — лазерная очистка VIN в Санкт-Петербурге</title>
-<meta name="description" content="Очищаем VIN, номера рамы и двигателя от ржавчины лазером: без следов на металле и без экспертизы. Выезд по СПб и Ленобласти за 30 минут, 10 минут работы, 4 800 ₽ за номер.">
+<title>TUR-LASER — лазерная очистка VIN в Санкт-Петербурге и Москве</title>
+<meta name="description" content="Очищаем VIN, номера рамы и двигателя от ржавчины лазером: без следов на металле и без экспертизы. Выезд по Санкт-Петербургу и Москве за 30 минут, 10 минут работы. Петербург и Ленобласть — 4 800 ₽, Москва и Подмосковье — 6 800 ₽ за номер.">
 <meta name="theme-color" content="#061226">
 <meta property="og:title" content="TUR-LASER — лазерная очистка VIN">
-<meta property="og:description" content="Ржавый VIN? Очистим лазером — без следов и экспертизы. Выезд по СПб и Ленобласти, 4 800 ₽ за номер.">
+<meta property="og:description" content="Ржавый VIN? Очистим лазером — без следов и экспертизы. Выезд по Петербургу и Москве. СПб — 4 800 ₽, Москва — 6 800 ₽ за номер.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23061226'/%3E%3Crect x='6' y='14.5' width='14' height='3' rx='1.5' fill='%2377CFF8'/%3E%3Ccircle cx='24' cy='16' r='3' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/days-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -15,7 +15,7 @@
 <link rel="preload" href="fonts/orbitron-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="img/vinlab-base.jpg" as="image">
 <link rel="preload" href="img/vinlab-rust.jpg" as="image">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=9">
 <noscript><style>.mbar--early{opacity:1;transform:none;pointer-events:auto}.vinlab__hint,.vinlab__meter,.ba__nav{display:none}</style></noscript>
 <!-- Счётчик аналитики ставим в день релиза (см. README): Яндекс.Метрика сюда, window.YM_ID = номер счётчика -->
 </head>
@@ -26,8 +26,9 @@
 <!-- Шапка -->
 <header class="hdr"><div class="wrap">
   <a class="logo" href="#hero"><img src="img/logo.png" width="2051" height="622" alt="TUR-LASER"></a>
-  <span class="hdr__meta">СПб и ЛО · 9:00–21:00</span>
-  <a class="hdr__tel" href="tel:+79502545550" data-goal="call_click">+7 950 254-55-50</a>
+  <span class="hdr__meta">СПб · Москва · 9:00–21:00</span>
+  <a class="hdr__tel" href="tel:+79502545550" data-goal="call_click"><small>СПб</small> +7 950 254-55-50</a>
+  <a class="hdr__tel hdr__tel--msk" href="tel:+79936045877" data-goal="call_click_msk"><small>Москва</small> +7 993 604-58-77</a>
   <a class="btn btn--o hdr__msg" href="#kontakty">Контакты</a>
 </div></header>
 
@@ -36,10 +37,14 @@
 <section class="hero" id="hero"><div class="wrap">
   <div class="hero__grid">
     <div class="hero__text">
-      <p class="crumb"><b>Лазерная очистка VIN</b> — СПб и&nbsp;Ленобласть</p>
+      <p class="crumb"><b>Лазерная очистка VIN</b> — Санкт-Петербург и&nbsp;Москва</p>
       <h1>Ржавый VIN?<br>Очистим<br class="d"> лазером<span class="d">&nbsp;—</span><br><em>без следов<br class="d"> и&nbsp;экспертизы</em></h1>
-      <p class="lead">Чистим VIN на кузове, номера рамы и двигателя. Приезжаем туда, где стоит машина.</p>
-      <div class="cta"><a class="btn btn--w btn--tel" href="tel:+79502545550" data-goal="call_click">+7 950 254-55-50</a><a class="ibtn" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a></div>
+      <p class="lead">Чистим VIN на кузове, номера рамы и двигателя. Приезжаем туда, где стоит машина, — в Петербурге, Москве и областях.</p>
+      <div class="cta cta--goroda">
+        <a class="btn btn--w btn--tel" href="tel:+79502545550" data-goal="call_click"><small>СПб</small>+7 950 254-55-50</a>
+        <a class="btn btn--o btn--tel" href="tel:+79936045877" data-goal="call_click_msk"><small>Москва</small>+7 993 604-58-77</a>
+        <span class="cta__soc"><a class="ibtn" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a></span>
+      </div>
     </div>
     <div class="hero__art">
       <div class="vinlab" id="vinlab" role="group" aria-label="Лазер снимает ржавчину — проявляется номер" data-base="img/vinlab-base.jpg" data-rust="img/vinlab-rust.jpg"><canvas aria-hidden="true"></canvas>
@@ -51,7 +56,8 @@
     </div>
   </div>
   <ul class="facts">
-    <li><b>4&thinsp;800&nbsp;<i>₽</i></b>за номер</li>
+    <li><b>4&thinsp;800&nbsp;<i>₽</i></b>СПб</li>
+    <li><b>6&thinsp;800&nbsp;<i>₽</i></b>Москва</li>
     <li><b>10&nbsp;<i>мин</i></b>работы</li>
     <li><b>30&nbsp;<i>мин</i></b>до приезда</li>
     <li><b>9&nbsp;<i>из</i>&nbsp;10</b>номеров читаются</li>
@@ -70,7 +76,7 @@
     <p class="tag">Луч снимает только ржавчину. Царапин, как после наждачки, не остаётся.</p>
     <ol class="steps">
       <li class="step"><span class="step__n">ШАГ 01</span><h3>Фото в мессенджер</h3><p>Пришлите снимок номера в WhatsApp, Telegram или MAX. Оценим бесплатно и скажем, проявится ли он.</p></li>
-      <li class="step"><span class="step__n">ШАГ 02</span><h3>Выезд за 30 минут</h3><p>По СПб и Ленобласти: во двор, на парковку, в гараж или к площадке осмотра.</p></li>
+      <li class="step"><span class="step__n">ШАГ 02</span><h3>Выезд за 30 минут</h3><p>По Петербургу, Москве и областям: во двор, на парковку, в гараж или к площадке осмотра.</p></li>
       <li class="step"><span class="step__n">ШАГ 03</span><h3>10 минут работы</h3><p>Вы стоите рядом и видите, как проявляется номер. Знаки не восстанавливаем и не наносим.</p></li>
       <li class="step"><span class="step__n">ШАГ 04</span><h3>Номер читается</h3><p>Лазер не касается металла: следов нет, экспертизу не назначают.</p></li>
     </ol>
@@ -148,26 +154,51 @@
 <!-- 4. Цена и контакты -->
 <section class="sec final" id="kontakty" aria-labelledby="h-kontakty"><div class="wrap">
   <span class="kicker"><b>03</b> — Цена и контакты</span>
-  <h2 class="h2 rv" id="h-kontakty">Позвоните <span>или напишите</span></h2>
-  <p class="lead">Фото номера в мессенджер или звонок: скажем цену и договоримся о времени.</p>
-  <div class="final__grid">
-    <div class="price">
-      <span class="cap">Цена за номер</span>
+  <h2 class="h2 rv" id="h-kontakty">Цена <span>и контакты</span></h2>
+  <p class="lead">Фото номера в мессенджер или звонок — подтвердим цену и договоримся о времени.</p>
+  <div class="final__grid final__grid--goroda">
+    <div class="city city--spb">
+      <div class="city__head"><span class="cap">Санкт-Петербург</span><span class="city__obl">Петербург и Ленобласть</span></div>
       <p class="price__sum">4&thinsp;800&nbsp;<i>₽</i></p>
-      <p class="price__what">VIN на кузове, номер рамы или двигателя</p>
-      <ul><li>Цена не зависит от машины и глубины ржавчины</li><li>Консультация и оценка по фото бесплатно</li><li>Фото результата остаётся у вас</li></ul>
-    </div>
-    <div class="contact">
-      <span class="cap">Телефон</span>
+      <p class="price__what">за один номер</p>
       <a class="contact__tel" href="tel:+79502545550" data-goal="call_click">+7 950 254-55-50</a>
       <div class="contact__btns"><a class="btn btn--w" href="tel:+79502545550" data-goal="call_click">Позвонить</a><a class="ibtn" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a></div>
       <dl class="contact__meta">
         <div><dt>Режим</dt><dd>Ежедневно с 9:00 до 21:00</dd></div>
-        <div><dt>Выезд</dt><dd>СПб и Ленобласть, обычно за 30 минут</dd></div>
+        <div><dt>Выезд</dt><dd>Петербург и Ленобласть, обычно за 30 минут</dd></div>
         <div><dt>Мастер</dt><dd>Вячеслав, в Telegram <a href="https://t.me/auto_slav" target="_blank" rel="noopener" data-goal="tg_click">@auto_slav</a></dd></div>
       </dl>
     </div>
+    <div class="city city--msk">
+      <div class="city__head"><span class="cap">Москва</span><span class="city__obl">Москва и Подмосковье</span></div>
+      <p class="price__sum">6&thinsp;800&nbsp;<i>₽</i></p>
+      <p class="price__what">за один номер</p>
+      <a class="contact__tel" href="tel:+79936045877" data-goal="call_click_msk">+7 993 604-58-77</a>
+      <div class="contact__btns"><a class="btn btn--w" href="tel:+79936045877" data-goal="call_click_msk">Позвонить</a><a class="ibtn" href="https://t.me/dmitry_laser" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click_msk"><svg aria-hidden="true"><use href="#i-tg"/></svg></a></div>
+      <dl class="contact__meta">
+        <div><dt>Режим</dt><dd>Ежедневно с 9:00 до 21:00</dd></div>
+        <div><dt>Выезд</dt><dd>Москва и Подмосковье, обычно за 30 минут</dd></div>
+      </dl>
+    </div>
   </div>
+  <ul class="price__usloviya"><li>Цена не зависит от машины и глубины ржавчины</li><li>Консультация и оценка по фото бесплатно</li><li>Фото результата остаётся у вас</li></ul>
+  <form class="zayavka" id="zayavka" novalidate data-url="https://zayavka.tur-laser.ru/sayt/zayavka" aria-labelledby="h-zayavka">
+    <div class="zayavka__head"><h3 class="zayavka__h" id="h-zayavka">Или оставьте заявку</h3><p class="zayavka__p">Перезвоним в рабочее время и договоримся, когда приехать.</p></div>
+    <div class="zayavka__fields">
+      <div class="zayavka__city" role="radiogroup" aria-label="Город">
+        <label><input type="radio" name="city" value="spb" checked><span>Санкт-Петербург · 4&thinsp;800&nbsp;₽</span></label>
+        <label><input type="radio" name="city" value="msk"><span>Москва · 6&thinsp;800&nbsp;₽</span></label>
+      </div>
+      <label class="fld"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></label>
+      <label class="fld"><span>Машина</span><input name="car" type="text" autocomplete="off" placeholder="Марка, модель, год" maxlength="80" required></label>
+      <label class="fld"><span>Адрес, куда приехать</span><input name="address" type="text" autocomplete="street-address" placeholder="Район, улица или ориентир" maxlength="200" required></label>
+      <label class="zayavka__hp" aria-hidden="true"><input name="site" type="text" tabindex="-1" autocomplete="off"></label>
+      <p class="zayavka__err" role="alert" hidden></p>
+      <button class="btn btn--w zayavka__btn" type="submit" data-goal="form_send">Отправить заявку</button>
+      <p class="zayavka__consent">Нажимая кнопку, вы соглашаетесь с <a href="policy/">политикой конфиденциальности</a>: номер нужен только для звонка по заявке.</p>
+    </div>
+    <div class="zayavka__ok" role="status" hidden><b>Заявка принята</b><p>Перезвоним с 9:00 до 21:00. Срочно — наберите сами, номера выше.</p></div>
+  </form>
 </div></section>
 
 <!-- 5. Не только VIN -->
@@ -195,15 +226,15 @@
 <!-- Подвал -->
 <footer class="ftr"><div class="wrap">
   <div class="ftr__top">
-    <div><a class="logo" href="#hero"><img src="img/logo.png" width="2051" height="622" alt="TUR-LASER"></a><p>Лазерная очистка VIN, номеров рамы и двигателя. <span class="nw">Санкт-Петербург</span> и Ленобласть.</p></div>
-    <div class="ftr__links"><a class="t" href="tel:+79502545550" data-goal="call_click">+7 950 254-55-50</a><div class="ftr__soc"><a class="ibtn ibtn--s" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn ibtn--s" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn ibtn--s" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a><span>ежедневно 9:00–21:00</span></div></div>
+    <div><a class="logo" href="#hero"><img src="img/logo.png" width="2051" height="622" alt="TUR-LASER"></a><p>Лазерная очистка VIN, номеров рамы и двигателя. <span class="nw">Санкт-Петербург</span> и Ленобласть, <span class="nw">Москва</span> и Подмосковье.</p></div>
+    <div class="ftr__links"><span class="ftr__city">Санкт-Петербург</span><a class="t" href="tel:+79502545550" data-goal="call_click">+7 950 254-55-50</a><span class="ftr__city">Москва</span><a class="t" href="tel:+79936045877" data-goal="call_click_msk">+7 993 604-58-77</a><div class="ftr__soc"><a class="ibtn ibtn--s" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn ibtn--s" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn ibtn--s" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a><span>ежедневно 9:00–21:00</span></div></div>
   </div>
   <div class="ftr__bot"><span>© <span id="year">2026</span> TUR-LASER</span><span><a href="policy/">Политика конфиденциальности</a></span></div>
 </div><div class="wm" aria-hidden="true">TUR-LASER</div></footer>
 
 <!-- Нижняя панель телефона -->
-<div class="mbar mbar--early" id="mbar"><a class="btn btn--w" href="tel:+79502545550" data-goal="call_click">Позвонить</a><a class="ibtn" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a></div>
+<div class="mbar mbar--early" id="mbar"><a class="btn btn--w" href="tel:+79502545550" data-goal="call_click">СПб</a><a class="btn btn--w" href="tel:+79936045877" data-goal="call_click_msk">Москва</a><a class="ibtn" href="https://wa.me/79502545550" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" title="WhatsApp" data-goal="wa_click"><svg aria-hidden="true"><use href="#i-wa"/></svg></a><a class="ibtn" href="https://t.me/auto_slav" target="_blank" rel="noopener" aria-label="Написать в Telegram" title="Telegram" data-goal="tg_click"><svg aria-hidden="true"><use href="#i-tg"/></svg></a><a class="ibtn" href="https://max.ru/u/f9LHodD0cOJTcNx3xoA1vya0MQ0de2oj36Owtv6z1Hdhw0TRg-xTGAW3iC0" target="_blank" rel="noopener" aria-label="Написать в MAX" title="MAX" data-goal="max_click"><svg aria-hidden="true"><use href="#i-max"/></svg></a></div>
 
-<script src="script.js?v=5"></script>
+<script src="script.js?v=6"></script>
 </body>
 </html>
