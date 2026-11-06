@@ -67,8 +67,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ftr .logo img{height:46px;margin-inline:auto}
 .hdr .logo{padding-block:15px}
 .hdr__meta{display:none}
-.hdr__tel{font:700 13px/1 var(--num);letter-spacing:.04em;white-space:nowrap;padding-block:16px}
-.hdr__tel small{font:600 9px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-right:5px}
+.hdr__tel{font:600 14px/1 var(--num);letter-spacing:0;white-space:nowrap;padding-block:16px}
+.hdr__tel small{font:500 13px/1 var(--body);letter-spacing:0;color:var(--muted);margin-right:6px}
 .hdr__tel--msk{display:none}
 .hdr__msg{display:none}
 
@@ -106,6 +106,7 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
 .cta--goroda .btn--tel:hover{border-color:var(--accent);background:var(--a05)}
 .btn--tel small{font:600 10px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.7}
 .cta__soc{display:flex;gap:10px;flex:1 1 100%;justify-content:center}
+.cta--soc .ibtn{flex:0 0 auto;width:52px;height:52px}
 .facts{list-style:none;margin-top:18px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 22px;padding:16px 14px;text-align:center;border:1px solid var(--l08);border-radius:20px;background:var(--w015)}
 .facts li{display:flex;align-items:baseline;gap:7px;white-space:nowrap;font:500 15px/1.3 var(--body);color:var(--muted)}
 .facts b{font:700 18px/1 var(--num);color:#fff;letter-spacing:.01em;white-space:nowrap}
@@ -233,8 +234,8 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .hdr .wrap{gap:24px}
   .logo img{height:66px}
   .ftr .logo img{height:50px;margin-inline:0}
-  .hdr__meta{display:block;font:700 11px/1 var(--num);letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-  .hdr__tel{font-size:15px}
+  .hdr__tel{font-size:16px}
+  .hdr__tel small{font-size:14px}
   .hdr .hdr__msg{display:inline-flex;height:40px;padding:0 18px;font-size:12px} /* .hdr — чтобы не перебивал .btn ниже */
   .hero{padding:calc(var(--hdr) + 36px) 0 44px}
   .hero__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-rows:auto 1fr;gap:0 56px;align-items:start}
@@ -279,9 +280,9 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .city .price__sum{font-size:40px}
   .hdr__tel--msk{display:inline-block}
   .hero__text{min-width:0}
-  .cta--goroda{flex-wrap:wrap;gap:10px;align-items:center}
-  .cta--goroda .btn--tel{flex:1 1 0;flex-direction:row;gap:8px;height:48px;padding:0 14px;font-size:15px;white-space:nowrap}
-  .cta--goroda .cta__soc{flex:1 1 100%;justify-content:flex-start;gap:10px}
+  .cta--soc .cta__soc{flex:0 0 auto;justify-content:flex-start;gap:12px}
+  .hero__art{max-width:560px;justify-self:end}
+  .facts{max-width:560px;justify-self:end}
   .price__usloviya{grid-template-columns:repeat(3,auto);justify-content:center;gap:10px 28px;max-width:none}
   .price{padding:30px 30px 32px}
   .price__sum{font-size:60px}
