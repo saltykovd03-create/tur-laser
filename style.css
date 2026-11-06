@@ -281,8 +281,8 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .hdr__tel--msk{display:inline-block}
   .hero__text{min-width:0}
   .cta--soc .cta__soc{flex:0 0 auto;justify-content:flex-start;gap:12px}
-  .hero__art{max-width:560px;justify-self:end}
-  .facts{max-width:560px;justify-self:end}
+  .hero__art{width:100%;max-width:560px;justify-self:end}
+  .facts{width:100%;max-width:560px;justify-self:end}
   .price__usloviya{grid-template-columns:repeat(3,auto);justify-content:center;gap:10px 28px;max-width:none}
   .price{padding:30px 30px 32px}
   .price__sum{font-size:60px}
