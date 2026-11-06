@@ -278,9 +278,10 @@ h1 em{text-transform:none;font-style:normal;font-weight:800;color:var(--accent);
   .city{padding:24px 26px}
   .city .price__sum{font-size:40px}
   .hdr__tel--msk{display:inline-block}
-  .cta--goroda{flex-wrap:nowrap;gap:10px;align-items:center}
-  .cta--goroda .btn--tel{flex:0 0 auto;flex-direction:row;gap:8px;height:48px;padding:0 16px;font-size:15px;white-space:nowrap}
-  .cta--goroda .cta__soc{flex:0 0 auto;gap:8px}
+  .hero__text{min-width:0}
+  .cta--goroda{flex-wrap:wrap;gap:10px;align-items:center}
+  .cta--goroda .btn--tel{flex:1 1 0;flex-direction:row;gap:8px;height:48px;padding:0 14px;font-size:15px;white-space:nowrap}
+  .cta--goroda .cta__soc{flex:1 1 100%;justify-content:flex-start;gap:10px}
   .price__usloviya{grid-template-columns:repeat(3,auto);justify-content:center;gap:10px 28px;max-width:none}
   .price{padding:30px 30px 32px}
   .price__sum{font-size:60px}
